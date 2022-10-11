@@ -7,11 +7,14 @@ dotenv.config();
 const uri = process.env.ATLAS_URI;
 const port = process.env.PORT || 8000;
 
-mongoose.connect(uri).catch((error) => handleError(error));
-
-app.listen(port, () => {
-  console.log(`Server is running on port: ${port}`);
-});
+mongoose
+  .connect(uri)
+  .catch((err) => console.error(err.stack))
+  .then(() => {
+    app.listen(port, () => {
+      console.log(`Server is running on port: ${port}`);
+    });
+  });
 
 const connection = mongoose.connection;
 
